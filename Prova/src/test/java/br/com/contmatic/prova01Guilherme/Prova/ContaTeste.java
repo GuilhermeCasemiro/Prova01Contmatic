@@ -29,22 +29,17 @@ public class ContaTeste {
 	Conta c = new Conta();
 	Conta destino = new Conta();
 
-	
-
+	@DisplayName("Teste para saber se o objeto não é nulo.")
 	@BeforeAll
 	@Order(1)
-	@DisplayName("Teste para saber se o objeto não é nulo.")
 	public static void TesteParaConta() {
-
-		
 		
 	}
 
-	
 	@AfterEach
 	@DisplayName("Teste com um valor para saque.")
 	@Order(2)
-	public void testeParaSaque( ) {
+	public void testeParaSaque() {
 
 		assert (c.saca(700));
 	}
@@ -73,7 +68,7 @@ public class ContaTeste {
 	@ParameterizedTest
 	@ValueSource(doubles = { 700, 100.50, 350.75 })
 	public void testeParaDeposito(double valor) {
-		double saldoFinal = c.saldoConta -= valor;
+		double saldoFinal = c.saldoConta += valor;
 		assertThat(saldoFinal, is(c.saldoConta));
 
 	}
@@ -89,9 +84,8 @@ public class ContaTeste {
 	@AfterAll
 	@DisplayName("Teste com Timeout pra ver se a execução de todos os metodos levam mais de 1s.")
 	public static void testeParaTimeout() {
-		assertTimeout(Duration.ofMillis(500), () -> {
-			System.out.println("Teste.");
-			Thread.sleep(100);
+		assertTimeout(Duration.ofMillis(10), () -> {
+			TesteParaConta();
 		});
 	}
 
