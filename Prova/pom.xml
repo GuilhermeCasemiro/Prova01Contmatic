@@ -13,16 +13,23 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.jupiter.version>5.5.1</junit.jupiter.version>
 	</properties>
+
+	<scm>
+		<url>https://github.com/six2six/fixture-factory</url>
+		<connection>scm:git:git://github.com/six2six/fixture-factory</connection>
+		<developerConnection>scm:git:git@github.com:six2six/fixture-factory.git</developerConnection>
+	</scm>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.1.0</version>
-			<scope>test</scope>
+			<groupId>org.junit</groupId>
+			<artifactId>junit5-engine</artifactId>
+			<version>5.0.0-ALPHA</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.hamcrest</groupId>
