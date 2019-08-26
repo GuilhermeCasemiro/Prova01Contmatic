@@ -1,47 +1,67 @@
 package br.com.contmatic.prova01Guilherme.Prova;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import br.com.contmatic.enums.DDD;
+import br.com.contmatic.enums.Telefone;
+
 public class Contato {
-	int telefone;
-	int ddd;
+	
+	Telefone telefone;
+	DDD ddd;
 
 	public Contato() {
 		super();
 	}
 
-	public Contato(int telefone, int ddd) {
+	public Contato(Telefone telefone, DDD ddd) {
 		super();
 		this.telefone = telefone;
 		this.ddd = ddd;
 	}
+	
 
-	@Override
+	@Valid
+	
+	@Size(max = 9)
+	public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    @Valid
+    @Max(2)
+    public DDD getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(DDD ddd) {
+        this.ddd = ddd;
+    }
+
+    @Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ddd;
-		result = prime * result + telefone;
-		return result;
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contato other = (Contato) obj;
-		if (ddd != other.ddd)
-			return false;
-		if (telefone != other.telefone)
-			return false;
-		return true;
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	@Override
 	public String toString() {
-		return "Contato [telefone=" + telefone + ", ddd=" + ddd + "]";
+		return new ToStringBuilder(this, ToStringStyle.JSON_STYLE).append("Telefone", telefone).append("DDD", ddd).toString();
 	}
 
 }

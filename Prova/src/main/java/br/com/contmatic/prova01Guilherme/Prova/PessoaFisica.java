@@ -1,72 +1,77 @@
 package br.com.contmatic.prova01Guilherme.Prova;
 
-import java.util.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
-public class PessoaFisica extends Pessoa{
-	String nome;
-	String cpf;
-	String sexo;
-	Date dataNascimento;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.br.CPF;
+import org.joda.time.DateTime;
 
-	public PessoaFisica() {
-		super();
-	}
+public class PessoaFisica extends Pessoa {
 
-	public PessoaFisica(String nome, String cpf, String sexo, Date dataNascimento) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.sexo = sexo;
-		this.dataNascimento = dataNascimento;
-	}
+    private String cpf;
+    private String sexo;
+    private DateTime dataNascimento;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
-		return result;
-	}
+    @NotNull
+    @Past
+    public DateTime getDataNascimento() {
+        return dataNascimento;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PessoaFisica other = (PessoaFisica) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		if (dataNascimento == null) {
-			if (other.dataNascimento != null)
-				return false;
-		} else if (!dataNascimento.equals(other.dataNascimento))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (sexo == null) {
-			if (other.sexo != null)
-				return false;
-		} else if (!sexo.equals(other.sexo))
-			return false;
-		return true;
-	}
+    public void setDataNascimento(DateTime dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
-	@Override
-	public String toString() {
-		return "PessoaFisica [nome=" + nome + ", cpf=" + cpf + ", sexo=" + sexo + ", dataNascimento=" + dataNascimento
-				+ "]";
-	}
+    public PessoaFisica() {
+        super();
+    }
+
+    public PessoaFisica(String cpf, String sexo) {
+        super();
+        this.cpf = cpf;
+        this.sexo = sexo;
+    }
+
+    @NotEmpty
+    @CPF
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    @NotEmpty
+    @Size(min = 1, max = 9)
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE).append("CPF", cpf).append("Sexo", sexo).toString();
+    }
 
 }

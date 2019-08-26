@@ -1,53 +1,62 @@
 package br.com.contmatic.prova01Guilherme.Prova;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import br.com.caelum.stella.bean.validation.CNPJ;
+
 public class PessoaJuridica extends Pessoa {
-	String cnpj;
-	String razaoSocial;
+    private String cnpj;
+    private String razaoSocial;
 
-	public PessoaJuridica() {
-		super();
-	}
+    public PessoaJuridica() {
+        super();
+    }
 
-	public PessoaJuridica(String cnpj, String razaoSocial) {
-		super();
-		this.cnpj = cnpj;
-		this.razaoSocial = razaoSocial;
-	}
+    public PessoaJuridica(String cnpj, String razaoSocial) {
+        super();
+        this.cnpj = cnpj;
+        this.razaoSocial = razaoSocial;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		result = prime * result + ((razaoSocial == null) ? 0 : razaoSocial.hashCode());
-		return result;
-	}
+    @NotBlank(message = "CNPJ obrigatório")
+    @CNPJ
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PessoaJuridica other = (PessoaJuridica) obj;
-		if (cnpj == null) {
-			if (other.cnpj != null)
-				return false;
-		} else if (!cnpj.equals(other.cnpj))
-			return false;
-		if (razaoSocial == null) {
-			if (other.razaoSocial != null)
-				return false;
-		} else if (!razaoSocial.equals(other.razaoSocial))
-			return false;
-		return true;
-	}
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	@Override
-	public String toString() {
-		return "PessoaJuridica [cnpj=" + cnpj + ", razaoSocial=" + razaoSocial + "]";
-	}
+    @NotBlank(message = "Razão Social é obrigatório")
+    @Size(min = 5, max = 20)
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE).append("Razão Social: ", razaoSocial).append("CNPJ: ", cnpj).toString();
+    }
 
 }

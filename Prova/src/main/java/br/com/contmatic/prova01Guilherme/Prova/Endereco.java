@@ -1,61 +1,75 @@
 package br.com.contmatic.prova01Guilherme.Prova;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import br.com.contmatic.enums.DDD;
+
 public class Endereco {
-	String bairo;
-	String uf;
-	String cep;
+    private String bairro;
+    private DDD uf;
+    private String cep;
 
-	public Endereco() {
-		super();
-	}
+    public Endereco() {
+        super();
+    }
 
-	public Endereco(String bairo, String uf, String cep) {
-		super();
-		this.bairo = bairo;
-		this.uf = uf;
-		this.cep = cep;
-	}
+    public Endereco(String bairro, DDD uf, String cep) {
+        super();
+        this.bairro = bairro;
+        this.uf = uf;
+        this.cep = cep;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((bairo == null) ? 0 : bairo.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
-		return result;
-	}
+    @Size(min = 5, max = 30)
+    public String getBairro() {
+        return bairro;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (bairo == null) {
-			if (other.bairo != null)
-				return false;
-		} else if (!bairo.equals(other.bairo))
-			return false;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (uf == null) {
-			if (other.uf != null)
-				return false;
-		} else if (!uf.equals(other.uf))
-			return false;
-		return true;
-	}
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
-	@Override
-	public String toString() {
-		return "Endereco [bairo=" + bairo + ", uf=" + uf + ", cep=" + cep + "]";
-	}
+    @Size(max = 2)
+    public DDD getUf() {
+        return uf;
+    }
+
+    public void setUf(DDD uf) {
+        this.uf = uf;
+    }
+
+    @NotNull
+    @Pattern(regexp = "^\\d{5}-\\d{3}$")
+    @Max(8)
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE).append("Bairro", bairro).append("UF", uf).append("CEP", cep).toString();
+    }
 
 }
